@@ -5,6 +5,11 @@ services:
     image: rabbitmq:3.13-management
     container_name: rabbittick-rabbitmq
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
@@ -24,6 +29,11 @@ services:
     image: mysql:8.0
     container_name: rabbittick-mysql
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
@@ -47,6 +57,11 @@ services:
     image: ${PERSISTER_IMAGE}
     container_name: rabbittick-persister
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -69,6 +84,11 @@ services:
     image: ${INGEST_IMAGE}
     container_name: rabbittick-ingest
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -86,6 +106,11 @@ services:
     image: prom/prometheus:v2.52.0
     container_name: rabbittick-prometheus
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
     depends_on:
       - persister
       - ingest
@@ -99,6 +124,11 @@ services:
     image: grafana/grafana:11.0.0
     container_name: rabbittick-grafana
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
     depends_on:
       - prometheus
     environment:
