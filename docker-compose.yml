@@ -3,7 +3,6 @@ version: "3.8"
 services:
   rabbitmq:
     image: rabbitmq:3.13-management
-    platform: linux/arm64
     container_name: rabbittick-rabbitmq
     restart: unless-stopped
     environment:
@@ -23,7 +22,6 @@ services:
 
   mysql:
     image: mysql:8.0
-    platform: linux/arm64
     container_name: rabbittick-mysql
     restart: unless-stopped
     command:
@@ -47,7 +45,6 @@ services:
 
   persister:
     image: ${PERSISTER_IMAGE}
-    platform: linux/arm64
     container_name: rabbittick-persister
     restart: unless-stopped
     depends_on:
@@ -70,7 +67,6 @@ services:
 
   ingest:
     image: ${INGEST_IMAGE}
-    platform: linux/arm64
     container_name: rabbittick-ingest
     restart: unless-stopped
     depends_on:
@@ -88,7 +84,6 @@ services:
 
   prometheus:
     image: prom/prometheus:v2.52.0
-    platform: linux/arm64
     container_name: rabbittick-prometheus
     restart: unless-stopped
     depends_on:
@@ -102,7 +97,6 @@ services:
 
   grafana:
     image: grafana/grafana:11.0.0
-    platform: linux/arm64
     container_name: rabbittick-grafana
     restart: unless-stopped
     depends_on:
